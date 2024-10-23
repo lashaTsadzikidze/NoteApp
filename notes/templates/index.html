@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main page</title>
+</head>
+<body>
+
+    <h1> All notes </h1>
+
+    <ul>
+        {% for note in notes %}
+            <a href="{% url 'note_details' note.title %}"> <li> {{ note.title }} </li> </a>
+            <p> {{ note.content }} </p>
+            <p> {{ note.date_created }} </p>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="note_id" value="{{ note.id }}">
+                <button type="submit">Delete</button>
+            </form>
+            <br>
+            <a href="{% url 'edit_note' note.id %}">Edit</a>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'add_note' %}">Add new note</a>
+    
+</body>
+</html>
